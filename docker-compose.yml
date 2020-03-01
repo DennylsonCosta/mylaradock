@@ -55,7 +55,7 @@ volumes:
 services:
 
 ### Workspace Utilities ##################################
-    workspace:
+    myworkspace:
       build:
         context: ./workspace
         args:
@@ -244,7 +244,7 @@ services:
         - DOCKER_HOST=tcp://docker-in-docker:2375
         - FAKETIME=${PHP_FPM_FAKETIME}
       depends_on:
-        - workspace
+        - myworkspace
       networks:
         backend:
           aliases:
@@ -281,11 +281,12 @@ services:
         - ${APP_CODE_PATH_HOST}:${APP_CODE_PATH_CONTAINER}${APP_CODE_CONTAINER_FLAG}
         - ./php-worker/supervisord.d:/etc/supervisord.d
       depends_on:
-        - workspace
+        - myworkspace
       extra_hosts:
         - "dockerhost:${DOCKER_HOST_IP}"
       networks:
         - backend
+
 ### Laravel Horizon ############################################
     laravel-horizon:
       build:
@@ -308,7 +309,7 @@ services:
         - ${APP_CODE_PATH_HOST}:${APP_CODE_PATH_CONTAINER}
         - ./laravel-horizon/supervisord.d:/etc/supervisord.d
       depends_on:
-        - workspace
+        - myworkspace
       extra_hosts:
         - "dockerhost:${DOCKER_HOST_IP}"
       networks:
@@ -385,7 +386,7 @@ services:
       expose:
         - "9000"
       depends_on:
-        - workspace
+        - myworkspace
       networks:
         - frontend
         - backend
@@ -596,7 +597,7 @@ services:
     aerospike:
       build: ./aerospike
       volumes:
-        - workspace
+        - myworkspace
         - ${DATA_PATH_HOST}/aerospike:/opt/aerospike/data
       ports:
         - "${AEROSPIKE_SERVICE_PORT}:3000"
@@ -912,7 +913,7 @@ services:
       ports:
         - "${VARNISH_PORT}:${VARNISH_PORT}"
       links:
-        - workspace
+        - myworkspace
       networks:
         - frontend
 
@@ -932,7 +933,7 @@ services:
       ports:
         - "${VARNISH_PORT}:${VARNISH_PORT}"
       links:
-        - workspace
+        - myworkspace
       networks:
         - frontend
 
@@ -1156,7 +1157,7 @@ services:
       volumes:
         - ${APP_CODE_PATH_HOST}:${APP_CODE_PATH_CONTAINER}${APP_CODE_CONTAINER_FLAG}
       depends_on:
-        - workspace
+        - myworkspace
       tty: true
 
 ### Portainer ################################################
