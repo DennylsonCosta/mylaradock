@@ -150,6 +150,13 @@ services:
         - "dockerhost:${DOCKER_HOST_IP}"
       ports:
         - "${WORKSPACE_SSH_PORT}:22"
+        - "8081:8081"
+        - "8082:8082"
+        - "8083:8083"
+        - "8084:8084"
+        - "8085:8085"
+        - "8086:8086"
+        - "8087:8080"
       tty: true
       environment:
         - PHP_IDE_CONFIG=${PHP_IDE_CONFIG}
