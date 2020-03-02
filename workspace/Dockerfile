@@ -417,6 +417,13 @@ RUN if [ ${INSTALL_WORKSPACE_ZSH} = true ]; then \
     /home/laradock/ohmyzsh.sh \
 ;fi
 
+RUN if [ ${INSTALL_WORKSPACE_ZSH} = true ]; then \
+    echo "" >> ~/.zshrc && \
+    echo "# Load Custom Aliases" >> ~/.zshrc && \
+    echo "source ~/aliases.sh" >> ~/.zshrc && \
+	  echo "" >> ~/.zshrc \
+;fi
+
 ###########################################################################
 # ssh:
 ###########################################################################
